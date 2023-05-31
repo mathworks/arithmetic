@@ -23,11 +23,21 @@ end
     end
     
     function releaseTask(~)
+        releaseFolderName = "release";
         % Create a release and put it in the release directory
         opts = matlab.addons.toolbox.ToolboxOptions("toolboxPackaging.prj");
+
         % By default, the packaging GUI restricts the name of the getting started guide, so we fix that here.
         opts.ToolboxGettingStartedGuide = fullfile("toolbox", "gettingStarted.mlx");
+
+        % GitHub releases don't allow spaces, so replace spaces with underscores
+        mltbxFileName = strrep(opts.ToolboxName," ","_") + ".mltbx";
+        opts.OutputFile = fullfile(releaseFolderName,mltbxFileName);
+
+        % Create the release directory, if needed
+        if ~exist(releaseFolderName,"dir")
+            mkdir(releaseFolderName)
+        end
         matlab.addons.toolbox.packageToolbox(opts);
-        movefile(opts.ToolboxName + ".mltbx","release")
     end
     
