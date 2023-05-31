@@ -10,6 +10,7 @@
         "outputs":
         [
            {"name":"sum", "type":["numeric","scalar"], "purpose":"the sum of num1 and num2"}
-        ]
+        ],
+        "purpose":"Adds two scalar numbers together"
       }
   }
