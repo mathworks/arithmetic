@@ -1,0 +1,15 @@
+{
+    "_schemaVersion": "1.0.0",
+    "add":
+    {
+        "inputs":
+        [
+           {"name":"num1", "kind":"required", "type":["numeric","scalar"], "purpose":"the first number to be added"},
+           {"name":"num2", "kind":"required", "type":["numeric","scalar"], "purpose":"the second number to be added"}
+        ],
+        "outputs":
+        [
+           {"name":"sum", "type":["numeric","scalar"], "purpose":"the sum of num1 and num2"}
+        ]
+      }
+  }

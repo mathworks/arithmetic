@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<metadata MetadataType="monolithic">
+  <Info Location="ProjectData">
+    <Info Name="arithmetic"/>
+  </Info>
+  <Categories Location="Root">
+    <Category Location="FileClassCategory">
+      <Info DataType="None" Name="Classification" ReadOnly="1" SingleValued="1"/>
+      <Label Location="design">
+        <Info Name="Design" ReadOnly="INHERITED"/>
+      </Label>
+      <Label Location="derived">
+        <Info Name="Derived" ReadOnly="INHERITED"/>
+      </Label>
+      <Label Location="artifact">
+        <Info Name="Artifact" ReadOnly="INHERITED"/>
+      </Label>
+      <Label Location="convenience">
+        <Info Name="Convenience" ReadOnly="INHERITED"/>
+      </Label>
+      <Label Location="other">
+        <Info Name="Other" ReadOnly="INHERITED"/>
+      </Label>
+      <Label Location="test">
+        <Info Name="Test" ReadOnly="INHERITED"/>
+      </Label>
+      <Label Location="none">
+        <Info Name="None" ReadOnly="INHERITED"/>
+      </Label>
+    </Category>
+  </Categories>
+  <Files Location="Root">
+    <File Location="README.md">
+      <Info/>
+    </File>
+    <File Location="images">
+      <Info/>
+      <DIR_SIGNIFIER Location="1">
+        <Info/>
+      </DIR_SIGNIFIER>
+      <File Location="readmeImage.jpg">
+        <Info/>
+      </File>
+      <File Location="toolboxPackaging.jpg">
+        <Info/>
+      </File>
+    </File>
+    <File Location="license.txt">
+      <Info/>
+    </File>
+    <File Location="tests">
+      <Info/>
+      <DIR_SIGNIFIER Location="1">
+        <Info/>
+      </DIR_SIGNIFIER>
+      <File Location="testAdd.m">
+        <Info>
+          <Category UUID="FileClassCategory">
+            <Label UUID="test"/>
+          </Category>
+        </Info>
+      </File>
+      <File Location="testIntToWord.m">
+        <Info>
+          <Category UUID="FileClassCategory">
+            <Label UUID="test"/>
+          </Category>
+        </Info>
+      </File>
+    </File>
+    <File Location="toolbox">
+      <Info/>
+      <DIR_SIGNIFIER Location="1">
+        <Info/>
+      </DIR_SIGNIFIER>
+      <File Location="add.m">
+        <Info>
+          <Category UUID="FileClassCategory">
+            <Label UUID="design"/>
+          </Category>
+        </Info>
+      </File>
+      <File Location="gettingStarted.mlx">
+        <Info>
+          <Category UUID="FileClassCategory">
+            <Label UUID="design"/>
+          </Category>
+        </Info>
+      </File>
+      <File Location="examples">
+        <Info/>
+        <DIR_SIGNIFIER Location="1">
+          <Info/>
+        </DIR_SIGNIFIER>
+        <File Location="usingAdd.mlx">
+          <Info>
+            <Category UUID="FileClassCategory">
+              <Label UUID="design"/>
+            </Category>
+          </Info>
+        </File>
+      </File>
+      <File Location="+describe">
+        <Info/>
+        <DIR_SIGNIFIER Location="1">
+          <Info/>
+        </DIR_SIGNIFIER>
+        <File Location="add.m">
+          <Info>
+            <Category UUID="FileClassCategory">
+              <Label UUID="design"/>
+            </Category>
+          </Info>
+        </File>
+      </File>
+      <File Location="internal">
+        <Info/>
+        <DIR_SIGNIFIER Location="1">
+          <Info/>
+        </DIR_SIGNIFIER>
+        <File Location="intToWord.m">
+          <Info>
+            <Category UUID="FileClassCategory">
+              <Label UUID="design"/>
+            </Category>
+          </Info>
+        </File>
+        <File Location="addLiveTask.m">
+          <Info>
+            <Category UUID="FileClassCategory">
+              <Label UUID="design"/>
+            </Category>
+          </Info>
+        </File>
+        <File Location="resources">
+          <Info/>
+          <DIR_SIGNIFIER Location="1">
+            <Info/>
+          </DIR_SIGNIFIER>
+          <File Location="liveTasks.json">
+            <Info>
+              <Category UUID="FileClassCategory">
+                <Label UUID="design"/>
+              </Category>
+            </Info>
+          </File>
+        </File>
+      </File>
+      <File Location="apps">
+        <Info/>
+        <DIR_SIGNIFIER Location="1">
+          <Info/>
+        </DIR_SIGNIFIER>
+      </File>
+      <File Location="functionSignatures.json">
+        <Info/>
+      </File>
+    </File>
+    <File Location="buildfile.m">
+      <Info>
+        <Category UUID="FileClassCategory">
+          <Label UUID="design"/>
+        </Category>
+      </Info>
+    </File>
+    <File Location="toolboxPackaging.prj">
+      <Info/>
+    </File>
+  </Files>
+  <ProjectPath Location="Root">
+    <Reference Location="4784743b-a6a3-4fd0-9a02-5faf9eb4c028">
+      <Info Ref="toolbox" Type="Relative"/>
+    </Reference>
+    <Reference Location="8b8af85e-0d74-4952-9476-8b74dd4bf217">
+      <Info Ref="tests" Type="Relative"/>
+    </Reference>
+    <Reference Location="47280a9a-492b-4aec-886b-24d28ce0b391">
+      <Info Ref="toolbox/internal" Type="Relative"/>
+    </Reference>
+    <Reference Location="971d856c-ea12-4c02-b0b2-372574717980">
+      <Info Ref="" Type="Relative"/>
+    </Reference>
+  </ProjectPath>
+</metadata>
