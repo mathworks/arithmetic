@@ -60,3 +60,9 @@ jobs:
         uses: matlab-actions/run-command@v2
         with:
           command: buildtool release
+      - name: Create GitHub Release
+        uses: ncipollo/release-action@v1
+        with:
+          draft: true        
+          artifacts: "release/Arithmetic_Toolbox.mltbx"
+          generateReleaseNotes: true
