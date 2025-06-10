@@ -15,9 +15,9 @@ on:
 jobs:
   mexBuild:
     strategy:
-      MATLABVersion: [2024b]
       matrix:
         os: [ubuntu-latest, windows-latest]
+        MATLABVersion: [2024b]
 
     runs-on: ${{ matrix.os }}
 
