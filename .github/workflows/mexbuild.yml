@@ -17,6 +17,7 @@ jobs:
     strategy:
       matrix:
         os: [ubuntu-latest, windows-latest]
+      matrix:
         MATLABVersion: [2024b]
 
     runs-on: ${{ matrix.os }}
