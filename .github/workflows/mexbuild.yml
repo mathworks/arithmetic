@@ -39,6 +39,7 @@ jobs:
           path: toolbox/private
     
   package:
+    needs: mexBuild
     runs-on: windows-latest
     steps:
       - name: Check out repository
