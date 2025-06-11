@@ -60,7 +60,7 @@ jobs:
       - name: Run script
         uses: matlab-actions/run-command@v2
         with:
-          command: buildtool release
+          command: buildtool release, ls release
       - name: Create GitHub Release
         uses: ncipollo/release-action@v1
         with:
