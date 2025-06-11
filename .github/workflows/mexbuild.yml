@@ -5,7 +5,7 @@ name: CI
 # Controls when the workflow will run
 on:
   push:
-    tag:
+    tags:
       - '*'
     branches: [ "mexBuildWithActions" ]
 
@@ -39,7 +39,7 @@ jobs:
           name: MEX_${{ matrix.os }}
           path: toolbox/private
     
-  package:
+  packageAndRelease:
     needs: mexBuild
     runs-on: windows-latest
     steps:
@@ -66,4 +66,3 @@ jobs:
         with:
           draft: true        
           artifacts: "release/Arithmetic_Toolbox.mltbx"
-          generateReleaseNotes: true
