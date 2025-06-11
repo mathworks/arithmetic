@@ -1,25 +1,17 @@
-# This is a basic workflow to help you get started with Actions
+name: releaseWorkflow
 
-name: CI
-
-# Controls when the workflow will run
 on:
   push:
     tags:
       - '*'
-    # branches: [ "mexBuildWithActions" ]
-
-  # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
-# A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   mexBuild:
     strategy:
       matrix:
-        os: [ubuntu-latest, windows-latest]
+        os: [ubuntu-latest, windows-latest, mac-latest]
         MATLABVersion: [R2024b]
-
     runs-on: ${{ matrix.os }}
 
     steps:
@@ -66,3 +58,4 @@ jobs:
         with:
           draft: true        
           artifacts: "release/Arithmetic_Toolbox.mltbx"
+          
