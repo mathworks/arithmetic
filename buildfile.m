@@ -2,7 +2,7 @@ function plan = buildfile
     % Create a plan from the task functions
     plan = buildplan(localfunctions);
     
-    % Create a MEX task
+    % Output folder for MEX functions
      mexOutputFolder = fullfile("toolbox","private");
     
     % Compile Cpp source code within cpp/*Mex into MEX functions
