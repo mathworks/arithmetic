@@ -42,14 +42,16 @@ jobs:
         with:
           name: MEX_windows-latest
           path: toolbox/private
+      - uses: actions/download-artifact@v4
+        with:
+          name: MEX_macos-latest
+          path: toolbox/private
       - name: Set up MATLAB
         uses: matlab-actions/setup-matlab@v2
+      - name: Run build task
+        uses: matlab-actions/run-build@v2
         with:
-          release: matlab-latest
-      - name: Run script
-        uses: matlab-actions/run-command@v2
-        with:
-          command: buildtool release
+          tasks: release
       - name: Create GitHub Release
         uses: ncipollo/release-action@v1
         with:
