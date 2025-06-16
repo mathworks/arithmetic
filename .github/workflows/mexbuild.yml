@@ -21,10 +21,10 @@ jobs:
         uses: matlab-actions/setup-matlab@v2
         with:
           release: ${{ matrix.MATLABVersion }}
-      - name: Run script
-        uses: matlab-actions/run-command@v2
+      - name: Run build task
+        uses: matlab-actions/run-build@v2
         with:
-          command: buildtool mex
+          tasks: mex
       - name: Upload MEX
         uses: actions/upload-artifact@v4
         with:
@@ -52,7 +52,7 @@ jobs:
       - name: Run script
         uses: matlab-actions/run-command@v2
         with:
-          command: buildtool release, ls release
+          command: buildtool release
       - name: Create GitHub Release
         uses: ncipollo/release-action@v1
         with:
