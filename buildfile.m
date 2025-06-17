@@ -15,6 +15,16 @@ function plan = buildfile
     end
     plan("mex").Description = "Build MEX functions";
 
+    % Define the "check" task
+    sourceFolder = files(plan, "toolbox");
+    plan("check") = matlab.buildtool.tasks.CodeIssuesTask(sourceFolder,...
+                            IncludeSubfolders = true);
+
+    % Define the "test" task
+    testsFolder = files(plan, "tests");
+    plan("test") = matlab.buildtool.tasks.TestTask(testsFolder,...
+                        IncludeSubfolders = true, OutputDetail = "terse");
+
     % Make the "test" task the default task in the plan
     plan.DefaultTasks = "test";
 
@@ -22,18 +32,18 @@ function plan = buildfile
     plan("release").Dependencies = ["check" "test"];
 end
     
-    function checkTask(~)
-        % Identify code issues
-        issues = codeIssues;
-        assert(isempty(issues.Issues),formattedDisplayText( ...
-            issues.Issues(:,["Location" "Severity" "Description"])))
-    end
-    
-    function testTask(~)
-        % Run unit tests
-        results = runtests(IncludeSubfolders=true,OutputDetail="terse");
-        assertSuccess(results);
-    end
+    % function checkTask(~)
+    %     % Identify code issues
+    %     issues = codeIssues;
+    %     assert(isempty(issues.Issues),formattedDisplayText( ...
+    %         issues.Issues(:,["Location" "Severity" "Description"])))
+    % end
+    % 
+    % function testTask(~)
+    %     % Run unit tests
+    %     results = runtests(IncludeSubfolders=true,OutputDetail="terse");
+    %     assertSuccess(results);
+    % end
     
     function releaseTask(~)
         releaseFolderName = "release";
