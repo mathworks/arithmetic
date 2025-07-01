@@ -32,19 +32,6 @@ function plan = buildfile
     plan("release").Dependencies = ["check" "test"];
 end
     
-    % function checkTask(~)
-    %     % Identify code issues
-    %     issues = codeIssues;
-    %     assert(isempty(issues.Issues),formattedDisplayText( ...
-    %         issues.Issues(:,["Location" "Severity" "Description"])))
-    % end
-    % 
-    % function testTask(~)
-    %     % Run unit tests
-    %     results = runtests(IncludeSubfolders=true,OutputDetail="terse");
-    %     assertSuccess(results);
-    % end
-    
     function releaseTask(~)
         releaseFolderName = "release";
         % Create a release and put it in the release directory
