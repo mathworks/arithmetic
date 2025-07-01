@@ -19,7 +19,7 @@ jobs:
       - name: Run build task
         uses: matlab-actions/run-build@v2
         with:
-          tasks: mex
+          tasks: mex test
       - name: Upload MEX functions
         uses: actions/upload-artifact@v4
         with:
