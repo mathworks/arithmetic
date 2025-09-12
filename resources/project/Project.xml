@@ -197,16 +197,19 @@
         </File>
     </Files>
     <ProjectPath Location="Root">
+        <Reference Location="47280a9a-492b-4aec-886b-24d28ce0b391">
+            <Info Ref="toolbox/internal" Type="Relative"/>
+        </Reference>
         <Reference Location="4784743b-a6a3-4fd0-9a02-5faf9eb4c028">
             <Info Ref="toolbox" Type="Relative"/>
+        </Reference>
+        <Reference Location="67a24e10-f3c1-4623-8a81-5785365c029d">
+            <Info Ref="toolbox/derived" Type="Relative"/>
         </Reference>
         <Reference Location="8b8af85e-0d74-4952-9476-8b74dd4bf217">
             <Info Ref="tests" Type="Relative"/>
         </Reference>
-        <Reference Location="47280a9a-492b-4aec-886b-24d28ce0b391">
-            <Info Ref="toolbox/internal" Type="Relative"/>
-        </Reference>
-        <Reference Location="971d856c-ea12-4c02-b0b2-372574717980">
+        <Reference Location="f5dc4e68-2400-4e1c-9eda-8a175d2d832d">
             <Info Ref="" Type="Relative"/>
         </Reference>
     </ProjectPath>
