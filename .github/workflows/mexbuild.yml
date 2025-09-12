@@ -1,0 +1,58 @@
+name: releaseWorkflow
+
+on:
+  push:
+    tags:
+      - '*'
+jobs:
+  mexBuild:
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+    runs-on: ${{ matrix.os }}
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+      - name: Set up MATLAB
+        uses: matlab-actions/setup-matlab@v2
+      - name: Run build task
+        uses: matlab-actions/run-build@v2
+        with:
+          tasks: mex test
+      - name: Upload MEX functions
+        uses: actions/upload-artifact@v4
+        with:
+          name: MEX_${{ matrix.os }}
+          path: toolbox/private
+    
+  packageAndRelease:
+    needs: mexBuild
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+        with:
+          name: MEX_ubuntu-latest
+          path: toolbox/private
+      - uses: actions/download-artifact@v4
+        with:
+          name: MEX_windows-latest
+          path: toolbox/private
+      - uses: actions/download-artifact@v4
+        with:
+          name: MEX_macos-latest
+          path: toolbox/private
+      - name: Set up MATLAB
+        uses: matlab-actions/setup-matlab@v2
+      - name: Run build task
+        uses: matlab-actions/run-build@v2
+        with:
+          tasks: release
+      - name: Create GitHub Release
+        uses: ncipollo/release-action@v1
+        with:
+          draft: true        
+          artifacts: "release/Arithmetic_Toolbox.mltbx"
+          

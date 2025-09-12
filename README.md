@@ -2,7 +2,7 @@
 
 ![](https://img.shields.io/github/v/release/mathworks/arithmetic?label=version) ![](https://img.shields.io/github/license/mathworks/arithmetic)
 
-This is an example MATLAB&reg; toolbox created to showcase how toolboxes are constructed and laid out, as described in the [MATLAB Toolbox Best Practices](https://github.com/mathworks/toolboxdesign). This toolbox is not functional, but rather serves as an example of how to create your own toolbox.
+This is an example MATLAB&reg; toolbox created to showcase how toolboxes are constructed and laid out, as described in the [MATLAB Toolbox Best Practices](https://github.com/mathworks/toolboxdesign). This toolbox is not functional, but rather serves as an example of how to create your own toolbox. It uses works well in MATLAB R2024b and later.
 
 ![Toolbox Logo](images/readmeImage.jpg)
 
