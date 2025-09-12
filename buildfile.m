@@ -1,53 +1,55 @@
 function plan = buildfile
-    % Create a plan from the task functions
-    plan = buildplan(localfunctions);
-    
-    % Output folder for MEX functions
-     mexOutputFolder = fullfile("toolbox","private");
-    
-    % Compile Cpp source code within cpp/*Mex into MEX functions
-    foldersToMex = plan.files(fullfile("cpp", "*Mex")).select(@isfolder);
-    for folder = foldersToMex.paths
-        [~, folderName] = fileparts(folder);
-        plan("mex:"+folderName) = matlab.buildtool.tasks.MexTask(fullfile(folder, "**/*.cpp"), ...
-            mexOutputFolder, ...
-            Filename=folderName);
-    end
-    plan("mex").Description = "Build MEX functions";
+% Create a plan from the task functions
+plan = buildplan(localfunctions);
 
-    % Define the "check" task
-    sourceFolder = files(plan, "toolbox");
-    plan("check") = matlab.buildtool.tasks.CodeIssuesTask(sourceFolder,...
-                            IncludeSubfolders = true);
+% Define the "clean" Task
+plan("clean") = matlab.buildtool.tasks.CleanTask;
 
-    % Define the "test" task
-    testsFolder = files(plan, "tests");
-    plan("test") = matlab.buildtool.tasks.TestTask(testsFolder,...
-                        IncludeSubfolders = true, OutputDetail = "terse");
+% Output folder for MEX functions
+mexOutputFolder = fullfile("toolbox","derived");
 
-    % Make the "test" task the default task in the plan
-    plan.DefaultTasks = "test";
-
-    % Make the "release" task dependent on the "check" and "test" tasks
-    plan("release").Dependencies = ["check" "test"];
+% Compile Cpp source code within cpp/*Mex into MEX functions
+foldersToMex = plan.files(fullfile("cpp", "*Mex")).select(@isfolder);
+for folder = foldersToMex.paths
+    [~, folderName] = fileparts(folder);
+    plan("mex:"+folderName) = matlab.buildtool.tasks.MexTask(fullfile(folder, "**/*.cpp"), ...
+        mexOutputFolder, ...
+        Filename=folderName);
 end
-    
-    function releaseTask(~)
-        releaseFolderName = "release";
-        % Create a release and put it in the release directory
-        opts = matlab.addons.toolbox.ToolboxOptions("toolboxPackaging.prj");
+plan("mex").Description = "Build MEX functions";
 
-        % By default, the packaging GUI restricts the name of the getting started guide, so we fix that here.
-        opts.ToolboxGettingStartedGuide = fullfile("toolbox", "gettingStarted.mlx");
+% Define the "check" task
+sourceFolder = files(plan, "toolbox");
+plan("check") = matlab.buildtool.tasks.CodeIssuesTask(sourceFolder,...
+    IncludeSubfolders = true);
 
-        % GitHub releases don't allow spaces, so replace spaces with underscores
-        mltbxFileName = strrep(opts.ToolboxName," ","_") + ".mltbx";
-        opts.OutputFile = fullfile(releaseFolderName,mltbxFileName);
+% Define the "test" task
+testsFolder = files(plan, "tests");
+plan("test") = matlab.buildtool.tasks.TestTask(testsFolder,...
+    IncludeSubfolders = true, OutputDetail = "terse");
 
-        % Create the release directory, if needed
-        if ~exist(releaseFolderName,"dir")
-            mkdir(releaseFolderName)
-        end
-        matlab.addons.toolbox.packageToolbox(opts);
-    end
-    
+% Make the "test" task the default task in the plan
+plan.DefaultTasks = ["mex" "test"];
+
+% Make the "release" task dependent on the "check" and "test" tasks
+plan("release").Dependencies = ["check" "test"];
+end
+
+function releaseTask(~)
+releaseFolderName = "release";
+% Create a release and put it in the release directory
+opts = matlab.addons.toolbox.ToolboxOptions("toolboxPackaging.prj");
+
+% By default, the packaging GUI restricts the name of the getting started guide, so we fix that here.
+opts.ToolboxGettingStartedGuide = fullfile("toolbox", "gettingStarted.mlx");
+
+% GitHub releases don't allow spaces, so replace spaces with underscores
+mltbxFileName = strrep(opts.ToolboxName," ","_") + ".mltbx";
+opts.OutputFile = fullfile(releaseFolderName,mltbxFileName);
+
+% Create the release directory, if needed
+if ~exist(releaseFolderName,"dir")
+    mkdir(releaseFolderName)
+end
+matlab.addons.toolbox.packageToolbox(opts);
+end
