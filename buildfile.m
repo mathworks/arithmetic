@@ -39,8 +39,14 @@ end
 function releaseTask(~)
 % Create an MLTBX package
 releaseFolderName = "release";
-% Create a release and put it in the release directory
-opts = matlab.addons.toolbox.ToolboxOptions("arithmetic.prj");
+if isMATLABReleaseOlderThan("R2025a")
+    % Toolbox packaging metadata migrated from packaging prj to project prj
+    % in 25a.
+    opts = matlab.addons.toolbox.ToolboxOptions("toolboxPackaging.prj");
+else
+    % Create a release and put it in the release directory
+    opts = matlab.addons.toolbox.ToolboxOptions("arithmetic.prj");
+end
 
 % By default, the packaging GUI restricts the name of the getting started guide, so we fix that here.
 opts.ToolboxGettingStartedGuide = fullfile("toolbox", "gettingStarted.mlx");
