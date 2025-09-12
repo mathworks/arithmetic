@@ -28,6 +28,18 @@
                 <Info Name="None" ReadOnly="INHERITED"/>
             </Label>
         </Category>
+        <Category Location="Deployment_Category_269131b8-d288-4e3c-8664-ed725fd2f4f1">
+            <Info DataType="None" Name="Toolbox - toolbox Toolbox" ReadOnly="0" SingleValued="0"/>
+            <Label Location="Deployment_ToolboxImageFile_269131b8-d288-4e3c-8664-ed725fd2f4f1">
+                <Info Name="Toolbox Image File" ReadOnly="WRITABLE"/>
+            </Label>
+            <Label Location="Deployment_ToolboxAppGalleryFiles_269131b8-d288-4e3c-8664-ed725fd2f4f1">
+                <Info Name="App Gallery File" ReadOnly="WRITABLE"/>
+            </Label>
+            <Label Location="Deployment_GettingStartedGuideFile_269131b8-d288-4e3c-8664-ed725fd2f4f1">
+                <Info Name="Getting Started Guide" ReadOnly="WRITABLE"/>
+            </Label>
+        </Category>
     </Categories>
     <Files Location="Root">
         <File Location="README.md">
@@ -42,7 +54,11 @@
                 <Info/>
             </File>
             <File Location="toolboxPackaging.jpg">
-                <Info/>
+                <Info>
+                    <Category UUID="Deployment_Category_269131b8-d288-4e3c-8664-ed725fd2f4f1">
+                        <Label UUID="Deployment_ToolboxImageFile_269131b8-d288-4e3c-8664-ed725fd2f4f1"/>
+                    </Category>
+                </Info>
             </File>
         </File>
         <File Location="license.txt">
@@ -151,8 +167,21 @@
                 <DIR_SIGNIFIER Location="1">
                     <Info/>
                 </DIR_SIGNIFIER>
+                <File Location="arithmetic.mlapp">
+                    <Info>
+                        <Category UUID="FileClassCategory">
+                            <Label UUID="design"/>
+                        </Category>
+                        <Category UUID="Deployment_Category_269131b8-d288-4e3c-8664-ed725fd2f4f1">
+                            <Label UUID="Deployment_ToolboxAppGalleryFiles_269131b8-d288-4e3c-8664-ed725fd2f4f1"/>
+                        </Category>
+                    </Info>
+                </File>
             </File>
             <File Location="functionSignatures.json">
+                <Info/>
+            </File>
+            <File Location="toolbox.ignore">
                 <Info/>
             </File>
         </File>
@@ -184,4 +213,16 @@
             <Info Ref="" Type="Relative"/>
         </Reference>
     </ProjectPath>
+    <Files Location="MathWorksDeploymentConfig{4feb78fe-8c6f-4b3a-b9f0-b4339f24cc2c}">
+        <DIR_SIGNIFIER Location="1">
+            <Info/>
+        </DIR_SIGNIFIER>
+        <Info ToolboxConfigModel="{&quot;entries&quot;:[{&quot;content&quot;:{&quot;appGalleryLabel&quot;:{&quot;content&quot;:{&quot;categoryID&quot;:&quot;Deployment_Category_269131b8-d288-4e3c-8664-ed725fd2f4f1&quot;,&quot;labelID&quot;:&quot;Deployment_ToolboxAppGalleryFiles_269131b8-d288-4e3c-8664-ed725fd2f4f1&quot;},&quot;type&quot;:&quot;deployment.toolbox.model.ProjectLabel&quot;,&quot;uuid&quot;:&quot;64cd71ec-65de-49cc-9f47-6f04f4e2d50c&quot;},&quot;authorName&quot;:&quot;MathWorks&quot;,&quot;authorOrganization&quot;:&quot;MathWorks&quot;,&quot;description&quot;:&quot;This is an example MATLAB® toolbox created to showcase how toolboxes are constructed and laid out, as described in the MATLAB Toolbox Best Practices. This toolbox is not functional, but rather serves as an example of how to create your own toolbox.&quot;,&quot;gettingStartedGuideLabel&quot;:{&quot;content&quot;:{&quot;categoryID&quot;:&quot;Deployment_Category_269131b8-d288-4e3c-8664-ed725fd2f4f1&quot;,&quot;labelID&quot;:&quot;Deployment_GettingStartedGuideFile_269131b8-d288-4e3c-8664-ed725fd2f4f1&quot;},&quot;type&quot;:&quot;deployment.toolbox.model.ProjectLabel&quot;,&quot;uuid&quot;:&quot;4742ca17-866e-4ee5-950d-5cbe3baa87c8&quot;},&quot;outputFileName&quot;:&quot;Arithmetic Toolbox.mltbx&quot;,&quot;outputFolder&quot;:&quot;/&quot;,&quot;summary&quot;:&quot;An example MATLAB® toolbox to showcase how toolboxes are constructed&quot;,&quot;supportedPlatforms&quot;:[&quot;Windows&quot;,&quot;Linux&quot;,&quot;Mac&quot;,&quot;MatlabOnline&quot;],&quot;toolboxFolder&quot;:&quot;toolbox&quot;,&quot;toolboxImgLabel&quot;:{&quot;content&quot;:{&quot;categoryID&quot;:&quot;Deployment_Category_269131b8-d288-4e3c-8664-ed725fd2f4f1&quot;,&quot;labelID&quot;:&quot;Deployment_ToolboxImageFile_269131b8-d288-4e3c-8664-ed725fd2f4f1&quot;},&quot;type&quot;:&quot;deployment.toolbox.model.ProjectLabel&quot;,&quot;uuid&quot;:&quot;cdbbc6a1-c854-4bee-bbf5-d9c06e926d0c&quot;},&quot;toolboxName&quot;:&quot;Arithmetic Toolbox&quot;,&quot;toolboxVersion&quot;:&quot;1.0&quot;,&quot;uniqueId&quot;:&quot;86f836af-bb8e-4bd2-aa1d-c43be533a134&quot;},&quot;type&quot;:&quot;deployment.toolbox.model.ToolboxConfiguration&quot;,&quot;uuid&quot;:&quot;15853af0-5cff-47a0-82d6-1b8b7d45efaa&quot;},{&quot;content&quot;:{},&quot;type&quot;:&quot;deployment.toolbox.model.ProjectStateValidationIssueList&quot;,&quot;uuid&quot;:&quot;f89e3b6b-ffe5-47bf-8e0d-b92141fa540e&quot;}],&quot;packageUris&quot;:[&quot;http://schema.mathworks.com/mf0/deployment_toolbox_model/1.0.0&quot;],&quot;version&quot;:&quot;1.0&quot;}" displayName="toolbox Toolbox" taskID="5ce35573-c8bc-4da6-914a-7e8e24c0e16e" type="Toolbox" uniqueId="269131b8-d288-4e3c-8664-ed725fd2f4f1"/>
+    </Files>
+    <Files Location="MathWorksDeploymentConfigs">
+        <Info configMapData="{&quot;toolbox Toolbox&quot;:&quot;MathWorksDeploymentConfig{4feb78fe-8c6f-4b3a-b9f0-b4339f24cc2c}&quot;}"/>
+        <DIR_SIGNIFIER Location="1">
+            <Info/>
+        </DIR_SIGNIFIER>
+    </Files>
 </metadata>

@@ -32,13 +32,15 @@ plan("test") = matlab.buildtool.tasks.TestTask(testsFolder,...
 plan.DefaultTasks = ["mex" "test"];
 
 % Make the "release" task dependent on the "check" and "test" tasks
-plan("release").Dependencies = ["check" "test"];
+plan("release").Dependencies = ["mex" "check" "test"];
+plan("release").Outputs = "release\Arithmetic_Toolbox.mltbx";
 end
 
 function releaseTask(~)
+% Create an MLTBX package
 releaseFolderName = "release";
 % Create a release and put it in the release directory
-opts = matlab.addons.toolbox.ToolboxOptions("toolboxPackaging.prj");
+opts = matlab.addons.toolbox.ToolboxOptions("arithmetic.prj");
 
 % By default, the packaging GUI restricts the name of the getting started guide, so we fix that here.
 opts.ToolboxGettingStartedGuide = fullfile("toolbox", "gettingStarted.mlx");
