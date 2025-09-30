@@ -14,8 +14,8 @@ This demonstrates a number of MATLAB features, including:
 * [Argument Validation](https://www.mathworks.com/help/matlab/matlab_prog/function-argument-validation-1.html)
 * [Custom Suggestions and Tab Completion](https://www.mathworks.com/help/matlab/matlab_prog/customize-code-suggestions-and-completions.html)
 * [Toolbox Packaging](https://www.mathworks.com/help/matlab/matlab_prog/create-and-share-custom-matlab-toolboxes.html)
-* [Namespaces](https://www.mathworks.com/help/matlab/matlab_oop/scoping-classes-with-packages.html), also known as packages
-* [Function-Based Unit Tests](https://www.mathworks.com/help/matlab/function-based-unit-tests.html)
+* [Namespaces](https://www.mathworks.com/help/matlab/matlab_oop/namespaces.html), previously known as packages
+* [Function-Based Unit Tests](https://www.mathworks.com/help/matlab/matlab_prog/function-based-unit-tests.html)
 * [MATLAB Apps](https://www.mathworks.com/help/matlab/gui-development.html)
 * [Live Tasks](https://www.mathworks.com/help/matlab/develop-live-editor-tasks.html)
 * [MATLAB Projects](https://www.mathworks.com/help/matlab/projects.html)
