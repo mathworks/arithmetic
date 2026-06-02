@@ -1,4 +1,5 @@
 function plan = buildfile
+
 % Create a plan from the task functions
 plan = buildplan(localfunctions);
 
@@ -19,12 +20,12 @@ end
 plan("build:mex").Description = "Build MEX functions";
 plan("build").Description = "Build the toolbox";
 
-% Define the "check" task
+% Define the "check" task as a sub task of validate
 sourceFolder = files(plan, "toolbox");
 plan("validate:check") = matlab.buildtool.tasks.CodeIssuesTask(sourceFolder,...
     IncludeSubfolders = true);
 
-% Define the "test" task
+% Define the "test" task as a sub task of validate 
 testsFolder = files(plan, "tests");
 plan("validate:test") = matlab.buildtool.tasks.TestTask(testsFolder,...
     IncludeSubfolders = true, OutputDetail = "terse");
@@ -32,12 +33,15 @@ plan("validate:test") = matlab.buildtool.tasks.TestTask(testsFolder,...
 
 plan("validate").Description = "Validate the toolbox";
 
-% Make the "test" task the default task in the plan
+% Make "build" task group the default task
 plan.DefaultTasks = "build";
 
-% Make the "release" task dependent on the "check" and "test" tasks
-plan("package").Dependencies = ["build" "validate"];
-plan("package").Outputs = "release\Arithmetic_Toolbox.mltbx";
+% Make the "validate" task dependent on "build" task group
+plan("validate").Dependencies = "build";
+
+% Make the "package" task dependent on "validate" task group
+plan("package").Dependencies = "validate";
+plan("package").Outputs = fullfile("release","Arithmetic_Toolbox.mltbx");
 end
 
 function packageTask(~)
