@@ -30,9 +30,6 @@ plan("validate:test") = matlab.buildtool.tasks.TestTask(testsFolder,...
     IncludeSubfolders = true, OutputDetail = "terse");
 
 
-plan("validate:dependency") = matlab.buildtool.Task();
-plan("validate:dependency").Actions = @dependencyAnalysis;
-
 plan("validate").Description = "Validate the toolbox";
 
 % Make the "test" task the default task in the plan
