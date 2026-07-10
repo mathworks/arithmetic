@@ -1,4 +1,5 @@
 function plan = buildfile
+
 % Create a plan from the task functions
 plan = buildplan(localfunctions);
 
@@ -12,31 +13,44 @@ mexOutputFolder = fullfile("toolbox","derived");
 foldersToMex = plan.files(fullfile("cpp", "*Mex")).select(@isfolder);
 for folder = foldersToMex.paths
     [~, folderName] = fileparts(folder);
-    plan("mex:"+folderName) = matlab.buildtool.tasks.MexTask(fullfile(folder, "**/*.cpp"), ...
+    % Create a task group for 
+    plan("build:mex:"+folderName) = matlab.buildtool.tasks.MexTask(fullfile(folder, "**/*.cpp"), ...
         mexOutputFolder, ...
         Filename=folderName);
 end
-plan("mex").Description = "Build MEX functions";
+plan("build:mex").Description = "Build MEX functions";
+plan("build").Description = "Build the toolbox";
 
-% Define the "check" task
+% Define the "check" task as a sub task of "validate"
 sourceFolder = files(plan, "toolbox");
-plan("check") = matlab.buildtool.tasks.CodeIssuesTask(sourceFolder,...
+
+plan("validate:dependency")=matlab.buildtool.Task;
+plan("validate:dependency").Description = "Run dependency analysis";
+plan("validate:dependency").Actions = @dependencyAnalysis;
+
+plan("validate:check") = matlab.buildtool.tasks.CodeIssuesTask(sourceFolder,...
     IncludeSubfolders = true);
 
-% Define the "test" task
+% Define the "test" task as a sub task of "validate" 
 testsFolder = files(plan, "tests");
-plan("test") = matlab.buildtool.tasks.TestTask(testsFolder,...
+plan("validate:test") = matlab.buildtool.tasks.TestTask(testsFolder,...
     IncludeSubfolders = true, OutputDetail = "terse");
 
-% Make the "test" task the default task in the plan
-plan.DefaultTasks = ["mex" "test"];
 
-% Make the "release" task dependent on the "check" and "test" tasks
-plan("release").Dependencies = ["mex" "check" "test"];
-plan("release").Outputs = "release\Arithmetic_Toolbox.mltbx";
+plan("validate").Description = "Validate the toolbox";
+
+% Make "build" task group the default task
+plan.DefaultTasks = "build";
+
+% Make the "validate" task dependent on "build" task group
+plan("validate").Dependencies = "build";
+
+% Make the "package" task dependent on "validate" task group
+plan("package").Dependencies = "validate";
+plan("package").Outputs = fullfile("release","Arithmetic_Toolbox.mltbx");
 end
 
-function releaseTask(~)
+function packageTask(~)
 % Create an MLTBX package
 releaseFolderName = "release";
 if isMATLABReleaseOlderThan("R2025a")
@@ -60,4 +74,30 @@ if ~exist(releaseFolderName,"dir")
     mkdir(releaseFolderName)
 end
 matlab.addons.toolbox.packageToolbox(opts);
+end
+
+
+function dependencyAnalysis(~)
+
+sourceFiles = dir(fullfile("toolbox","**","*.m"));
+filePaths = fullfile({sourceFiles.folder}, {sourceFiles.name});
+
+requiredFiles = {};
+requiredProducts = struct([]);
+for source= filePaths
+    [reqFiles, reqProducts] = matlab.codetools.requiredFilesAndProducts(source);
+    requiredFiles = [requiredFiles reqFiles];
+    requiredProducts = [requiredProducts reqProducts];
+end
+
+requiredFiles = unique(requiredFiles);
+% requiredProducts = unique(requiredProducts);
+
+for i = 1:numel(requiredFiles)
+    fprintf("  %s\n", requiredFiles{i});
+end
+
+for i = 1:numel(requiredProducts)
+    fprintf("  %s (ID: %d)\n", requiredProducts(i).Name, requiredProducts(i).ProductNumber);
+end
 end
