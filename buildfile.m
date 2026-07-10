@@ -13,6 +13,7 @@ mexOutputFolder = fullfile("toolbox","derived");
 foldersToMex = plan.files(fullfile("cpp", "*Mex")).select(@isfolder);
 for folder = foldersToMex.paths
     [~, folderName] = fileparts(folder);
+    % Create a task group for 
     plan("build:mex:"+folderName) = matlab.buildtool.tasks.MexTask(fullfile(folder, "**/*.cpp"), ...
         mexOutputFolder, ...
         Filename=folderName);
@@ -20,12 +21,17 @@ end
 plan("build:mex").Description = "Build MEX functions";
 plan("build").Description = "Build the toolbox";
 
-% Define the "check" task as a sub task of validate
+% Define the "check" task as a sub task of "validate"
 sourceFolder = files(plan, "toolbox");
+
+plan("validate:dependency")=matlab.buildtool.Task;
+plan("validate:dependency").Description = "Run dependency analysis";
+plan("validate:dependency").Actions = @dependencyAnalysis;
+
 plan("validate:check") = matlab.buildtool.tasks.CodeIssuesTask(sourceFolder,...
     IncludeSubfolders = true);
 
-% Define the "test" task as a sub task of validate 
+% Define the "test" task as a sub task of "validate" 
 testsFolder = files(plan, "tests");
 plan("validate:test") = matlab.buildtool.tasks.TestTask(testsFolder,...
     IncludeSubfolders = true, OutputDetail = "terse");
@@ -68,4 +74,30 @@ if ~exist(releaseFolderName,"dir")
     mkdir(releaseFolderName)
 end
 matlab.addons.toolbox.packageToolbox(opts);
+end
+
+
+function dependencyAnalysis(~)
+
+sourceFiles = dir(fullfile("toolbox","**","*.m"));
+filePaths = fullfile({sourceFiles.folder}, {sourceFiles.name});
+
+requiredFiles = {};
+requiredProducts = struct([]);
+for source= filePaths
+    [reqFiles, reqProducts] = matlab.codetools.requiredFilesAndProducts(source);
+    requiredFiles = [requiredFiles reqFiles];
+    requiredProducts = [requiredProducts reqProducts];
+end
+
+requiredFiles = unique(requiredFiles);
+% requiredProducts = unique(requiredProducts);
+
+for i = 1:numel(requiredFiles)
+    fprintf("  %s\n", requiredFiles{i});
+end
+
+for i = 1:numel(requiredProducts)
+    fprintf("  %s (ID: %d)\n", requiredProducts(i).Name, requiredProducts(i).ProductNumber);
+end
 end
