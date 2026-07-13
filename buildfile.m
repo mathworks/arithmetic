@@ -27,6 +27,7 @@ sourceFolder = files(plan, "toolbox");
 plan("validate:dependency")=matlab.buildtool.Task;
 plan("validate:dependency").Description = "Run dependency analysis";
 plan("validate:dependency").Actions = @dependencyAnalysis;
+plan("validate:dependency").Outputs = "dependencycache.graphml";
 
 plan("validate:check") = matlab.buildtool.tasks.CodeIssuesTask(sourceFolder,...
     IncludeSubfolders = true);
@@ -78,26 +79,80 @@ end
 
 
 function dependencyAnalysis(~)
+prj = currentProject();
+updateDependencies(prj);
 
-sourceFiles = dir(fullfile("toolbox","**","*.m"));
-filePaths = fullfile({sourceFiles.folder}, {sourceFiles.name});
+% Read the dependency cache and list missing files
+doc = xmlread("dependencycache.graphml");
+keys = doc.getElementsByTagName("key");
+nodes = doc.getElementsByTagName("node");
 
-requiredFiles = {};
-requiredProducts = struct([]);
-for source= filePaths
-    [reqFiles, reqProducts] = matlab.codetools.requiredFilesAndProducts(source);
-    requiredFiles = [requiredFiles reqFiles];
-    requiredProducts = [requiredProducts reqProducts];
+% Build dictionaries mapping key id to attr.name, grouped by element type
+nodeKeys = dictionary;
+edgeKeys = dictionary;
+graphKeys = dictionary;
+for i = 0:keys.getLength()-1
+    elem = keys.item(i);
+    keyId = string(elem.getAttribute("id"));
+    attrName = string(elem.getAttribute("attr.name"));
+    keyFor = string(elem.getAttribute("for"));
+    switch keyFor
+        case "node"
+            nodeKeys(keyId) = attrName;
+        case "edge"
+            edgeKeys(keyId) = attrName;
+        case "graph"
+            graphKeys(keyId) = attrName;
+    end
 end
 
-requiredFiles = unique(requiredFiles);
-% requiredProducts = unique(requiredProducts);
+missingFiles = {};
+requiredProducts = {};
+for i = 0:nodes.getLength()-1
+    eachNode = nodes.item(i).getElementsByTagName("data");
 
-for i = 1:numel(requiredFiles)
-    fprintf("  %s\n", requiredFiles{i});
+    nodePath = "";
+    nodeType = "";
+    for j = 0:eachNode.getLength()-1
+        data = eachNode.item(j);
+        key = string(data.getAttribute("key"));
+        value = string(data.getTextContent());
+        if nodeKeys(key) == "node.path"
+            nodePath = value;
+        end
+        if nodeKeys(key) == "node.type"
+            nodeType = value;
+        end
+    end
+
+    if nodeType == "Product"
+        requiredProducts{end+1} = nodePath;
+        continue
+    end
+
+    if startsWith(nodePath, "$/")
+        % Project file - check if it exists on disk
+        relPath = extractAfter(nodePath, "$/");
+        if ~isfile(relPath)
+            missingFiles{end+1} = relPath; 
+        end
+    else
+        % External unresolved dependency
+        missingFiles{end+1} = nodePath;
+    end
 end
 
+fprintf("  Required products (%d):\n", numel(requiredProducts));
 for i = 1:numel(requiredProducts)
-    fprintf("  %s (ID: %d)\n", requiredProducts(i).Name, requiredProducts(i).ProductNumber);
+    fprintf("    %s\n", requiredProducts{i});
+end
+
+if isempty(missingFiles)
+    fprintf("  Package is complete no missing files.\n");
+else
+    fprintf("  Missing Files (%d):\n", numel(missingFiles));
+    for i = 1:numel(missingFiles)
+        fprintf("    %s\n", missingFiles{i});
+    end
 end
 end

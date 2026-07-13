@@ -1,0 +1,50 @@
+name = "arithmetic"
+
+[folders]
+path = [
+    "tests",
+    "toolbox",
+    "toolbox/derived",
+    "toolbox/internal",
+]
+test = [
+    "tests",
+]
+
+[project.labels."Toolbox - toolbox Toolbox"]
+"Toolbox Image File" = [
+    "images\\toolboxPackaging.jpg",
+]
+"App Gallery File" = [
+    "toolbox\\apps\\arithmetic.mlapp",
+]
+"Getting Started Guide" = [
+]
+
+[project.dependency-analyzer]
+[[package]]
+configuration-name = "toolbox Toolbox"
+use-license-bsd = false
+name = ""
+version = "1.0"
+description = "This is an example MATLAB® toolbox created to showcase how toolboxes are constructed and laid out, as described in the MATLAB Toolbox Best Practices. This toolbox is not functional, but rather serves as an example of how to create your own toolbox."
+id = "86f836af-bb8e-4bd2-aa1d-c43be533a134"
+package-root = "toolbox"
+provider.name = "MathWorks"
+provider.email = ""
+provider.organization = "MathWorks"
+display-name = "Arithmetic Toolbox"
+summary = "An example MATLAB® toolbox to showcase how toolboxes are constructed"
+output-file-name = "Arithmetic Toolbox.mltbx"
+output-folder = "release"
+preview-image-file = "images/toolboxPackaging.jpg"
+app-gallery-files = [
+    "toolbox/apps/arithmetic.mlapp",
+]
+supported-platforms = [
+    "windows",
+    "linux",
+    "macos",
+]
+unique-id = "8db2c334-ea30-4cf6-8f31-4ea58cd2bd89"
+
